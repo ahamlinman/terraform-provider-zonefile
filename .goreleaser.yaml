@@ -1,0 +1,70 @@
+# yaml-language-server: $schema=https://goreleaser.com/static/schema.json
+# vim: set ts=2 sw=2 tw=0 fo=cnqoj
+
+version: 2
+
+before:
+  hooks:
+  - go mod tidy
+  - go generate ./...
+  - make -C release
+
+builds:
+- binary: '{{.ProjectName}}_v{{.Version}}'
+  mod_timestamp: '{{.CommitTimestamp}}'
+  env:
+  - CGO_ENABLED=0
+  flags:
+  - -trimpath
+  goos:
+  - darwin
+  - freebsd
+  - linux
+  - windows
+  goarch:
+  - amd64
+  - arm
+  - arm64
+  ignore:
+  - goos: freebsd
+    goarch: arm
+  - goos: freebsd
+    goarch: arm64
+  - goos: windows
+    goarch: arm
+
+archives:
+- format: zip
+  name_template: '{{.ProjectName}}_{{.Version}}_{{.Os}}_{{.Arch}}'
+  files:
+  - src: release/COPYING.txt
+    strip_parent: true
+  - src: release/sources.zip
+    strip_parent: true
+
+checksum:
+  algorithm: sha256
+  name_template: '{{.ProjectName}}_{{.Version}}_SHA256SUMS'
+  extra_files:
+  - glob: terraform-registry-manifest.json
+    name_template: '{{.ProjectName}}_{{.Version}}_manifest.json'
+
+# TODO: Create a GPG key for release signing.
+# signs:
+# - artifacts: checksum
+#   args:
+#   - --batch
+#   - --local-user
+#   - '{{.Env.GPG_FINGERPRINT}}'
+#   - --output
+#   - '${signature}'
+#   - --detach-sign
+#   - '${artifact}'
+
+release:
+  extra_files:
+  - glob: terraform-registry-manifest.json
+    name_template: '{{.ProjectName}}_{{.Version}}_manifest.json'
+
+changelog:
+  disable: true

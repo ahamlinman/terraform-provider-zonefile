@@ -1,0 +1,12 @@
+All of the source code for terraform-provider-zonefile is available under
+licenses which are both [free] and [open source].
+
+Some code is incorporated into terraform-provider-zonefile under the terms of
+the Mozilla Public License 2.0 (MPL). The remainder which is not under the MPL
+is available under one of a variety of other free and open source licenses.
+You may obtain copies of these licenses, along with the Source Code Form of
+software governed by the terms of the MPL, from the "sources.zip" archive
+included in this release.
+
+[free]: https://www.gnu.org/philosophy/free-sw.html
+[open source]: https://opensource.org/osd
