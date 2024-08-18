@@ -7,7 +7,7 @@ before:
   hooks:
   - go mod tidy
   - go generate ./...
-  - make -C release sources.zip
+  - make -C release
 
 builds:
 - binary: '{{.ProjectName}}_v{{.Version}}'
