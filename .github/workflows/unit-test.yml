@@ -1,0 +1,13 @@
+name: Unit Test
+on:
+  push: {}
+jobs:
+  unit-test:
+    runs-on: ubuntu-22.04
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-go@v5
+      with:
+        go-version: "1.23"
+    - name: Unit Test
+      run: go test -v ./...

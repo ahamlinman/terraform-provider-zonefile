@@ -1,4 +1,4 @@
-name: terraform-provider-zonefile Release Test
+name: Release Test
 on:
   workflow_dispatch: {}
 jobs:
